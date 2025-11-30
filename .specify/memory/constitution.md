@@ -1,8 +1,7 @@
 <!--
 Sync Impact Report:
-- Version change: 1.0.0 (No change)
-- Updates:
-  - .specify/templates/tasks-template.md (✅ updated to enforce mandatory testing)
+- Version change: 1.0.0 -> 1.1.0
+- Added principles: Communication Standards (Japanese interaction, English docs)
 -->
 # ddc-py-gui Constitution
 
@@ -35,6 +34,11 @@ Efficiency is critical for system utilities.
 - **Startup Time**: The application should start and be ready for interaction quickly.
 - **Resource Usage**: Background monitoring processes must have minimal CPU and memory footprint.
 
+### V. Communication Standards
+Clear communication is essential for collaboration.
+- **Interaction Language**: All conversational interactions with the user must be in Japanese.
+- **Documentation Language**: All technical documentation, code comments, and commit messages must be in English.
+
 ## Governance
 
 ### Amendment Process
@@ -51,4 +55,4 @@ Efficiency is critical for system utilities.
 - All Pull Requests must be reviewed against these principles.
 - Non-compliant code should be rejected until fixed.
 
-**Version**: 1.0.0 | **Ratified**: 2025-11-30 | **Last Amended**: 2025-11-30
+**Version**: 1.1.0 | **Ratified**: 2025-11-30 | **Last Amended**: 2025-11-30
