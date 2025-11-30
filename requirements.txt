@@ -3,3 +3,4 @@ monitorcontrol
 pytest
 ruff
 pyinstaller
+pre-commit
