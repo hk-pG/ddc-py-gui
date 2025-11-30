@@ -1,7 +1,5 @@
 import logging
-from typing import List, Optional
-import subprocess
-import json
+from typing import List
 
 # Try to import monitorcontrol, but handle if it's missing (for now)
 try:

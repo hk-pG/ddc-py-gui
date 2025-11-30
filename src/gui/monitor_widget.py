@@ -1,5 +1,5 @@
 from PyQt6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QSlider
-from PyQt6.QtCore import Qt, pyqtSignal
+from PyQt6.QtCore import Qt
 
 class MonitorWidget(QWidget):
     def __init__(self, monitor, parent=None):
@@ -18,23 +18,23 @@ class MonitorWidget(QWidget):
 
         # Brightness Control
         b_layout = QHBoxLayout()
-        b_label = QLabel("Brightness")
+        self.b_label = QLabel(f"Brightness: {self.monitor.get_brightness()}")
         self.b_slider = QSlider(Qt.Orientation.Horizontal)
         self.b_slider.setRange(0, 100)
         self.b_slider.setValue(self.monitor.get_brightness())
         self.b_slider.valueChanged.connect(self.on_brightness_changed)
-        b_layout.addWidget(b_label)
+        b_layout.addWidget(self.b_label)
         b_layout.addWidget(self.b_slider)
         layout.addLayout(b_layout)
 
         # Contrast Control
         c_layout = QHBoxLayout()
-        c_label = QLabel("Contrast")
+        self.c_label = QLabel(f"Contrast: {self.monitor.get_contrast()}")
         self.c_slider = QSlider(Qt.Orientation.Horizontal)
         self.c_slider.setRange(0, 100)
         self.c_slider.setValue(self.monitor.get_contrast())
         self.c_slider.valueChanged.connect(self.on_contrast_changed)
-        c_layout.addWidget(c_label)
+        c_layout.addWidget(self.c_label)
         c_layout.addWidget(self.c_slider)
         layout.addLayout(c_layout)
 
@@ -65,7 +65,9 @@ class MonitorWidget(QWidget):
         """)
 
     def on_brightness_changed(self, value):
+        self.b_label.setText(f"Brightness: {value}")
         self.monitor.set_brightness(value)
 
     def on_contrast_changed(self, value):
+        self.c_label.setText(f"Contrast: {value}")
         self.monitor.set_contrast(value)
