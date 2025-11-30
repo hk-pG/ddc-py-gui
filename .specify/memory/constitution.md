@@ -37,7 +37,7 @@ Efficiency is critical for system utilities.
 ### V. Communication Standards
 Clear communication is essential for collaboration.
 - **Interaction Language**: All conversational interactions with the user must be in Japanese.
-- **Documentation Language**: All technical documentation, code comments, and commit messages must be in English.
+- **Documentation Language**: All technical documentation, code comments, and commit messages must be in English.ただし、日本語でも分かるようにようやく程度は日本語で書いてほしい。あくまで英語で書いた上でそれを翻訳・意訳する形でよい。
 
 ## Governance
 
