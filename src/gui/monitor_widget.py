@@ -1,5 +1,6 @@
-from PyQt6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QSlider
+from PyQt6.QtWidgets import QWidget, QVBoxLayout, QGridLayout, QLabel, QSlider
 from PyQt6.QtCore import Qt
+
 
 class MonitorWidget(QWidget):
     def __init__(self, monitor, parent=None):
@@ -16,30 +17,34 @@ class MonitorWidget(QWidget):
         self.name_label.setStyleSheet("font-weight: bold; font-size: 14px;")
         layout.addWidget(self.name_label)
 
+        # Controls Layout
+        controls_layout = QGridLayout()
+        layout.addLayout(controls_layout)
+
         # Brightness Control
-        b_layout = QHBoxLayout()
         self.b_label = QLabel(f"Brightness: {self.monitor.get_brightness()}")
         self.b_slider = QSlider(Qt.Orientation.Horizontal)
         self.b_slider.setRange(0, 100)
         self.b_slider.setValue(self.monitor.get_brightness())
         self.b_slider.valueChanged.connect(self.on_brightness_changed)
-        b_layout.addWidget(self.b_label)
-        b_layout.addWidget(self.b_slider)
-        layout.addLayout(b_layout)
+        controls_layout.addWidget(self.b_label, 0, 0)
+        controls_layout.addWidget(self.b_slider, 0, 1)
 
         # Contrast Control
-        c_layout = QHBoxLayout()
         self.c_label = QLabel(f"Contrast: {self.monitor.get_contrast()}")
         self.c_slider = QSlider(Qt.Orientation.Horizontal)
         self.c_slider.setRange(0, 100)
         self.c_slider.setValue(self.monitor.get_contrast())
         self.c_slider.valueChanged.connect(self.on_contrast_changed)
-        c_layout.addWidget(self.c_label)
-        c_layout.addWidget(self.c_slider)
-        layout.addLayout(c_layout)
+        controls_layout.addWidget(self.c_label, 1, 0)
+        controls_layout.addWidget(self.c_slider, 1, 1)
+
+        # Ensure sliders expand
+        controls_layout.setColumnStretch(1, 1)
 
         # Styling
-        self.setStyleSheet("""
+        self.setStyleSheet(
+            """
             QWidget {
                 background-color: #2b2b2b;
                 color: #ffffff;
@@ -62,7 +67,8 @@ class MonitorWidget(QWidget):
                 margin: -7px 0;
                 border-radius: 9px;
             }
-        """)
+        """
+        )
 
     def on_brightness_changed(self, value):
         self.b_label.setText(f"Brightness: {value}")
