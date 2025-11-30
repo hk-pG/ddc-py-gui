@@ -1,4 +1,5 @@
-from PyQt6.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QScrollArea, QLabel, QPushButton
+from PyQt6.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QScrollArea, QLabel, QPushButton, QSystemTrayIcon, QMenu, QApplication
+from PyQt6.QtGui import QAction, QCloseEvent
 from PyQt6.QtCore import Qt
 from core.monitor_manager import MonitorManager
 from gui.monitor_widget import MonitorWidget
@@ -12,6 +13,35 @@ class MainWindow(QMainWindow):
         self.monitor_manager = MonitorManager()
         
         self.init_ui()
+        self.init_tray()
+
+    def init_tray(self):
+        self.tray_icon = QSystemTrayIcon(self)
+        # Use a standard icon for now, or a placeholder
+        self.tray_icon.setIcon(self.style().standardIcon(self.style().StandardPixmap.SP_ComputerIcon))
+        
+        tray_menu = QMenu()
+        
+        show_action = QAction("Show", self)
+        show_action.triggered.connect(self.show)
+        tray_menu.addAction(show_action)
+        
+        quit_action = QAction("Quit", self)
+        quit_action.triggered.connect(QApplication.instance().quit)
+        tray_menu.addAction(quit_action)
+        
+        self.tray_icon.setContextMenu(tray_menu)
+        self.tray_icon.show()
+
+    def closeEvent(self, event: QCloseEvent):
+        event.ignore()
+        self.hide()
+        self.tray_icon.showMessage(
+            "DDC Display Control",
+            "Application minimized to tray",
+            QSystemTrayIcon.MessageIcon.Information,
+            2000
+        )
 
     def init_ui(self):
         central_widget = QWidget()

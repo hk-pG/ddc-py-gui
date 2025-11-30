@@ -1,6 +1,5 @@
 import pytest
-from PyQt6.QtWidgets import QApplication, QSystemTrayIcon, QMenu
-from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QApplication, QSystemTrayIcon
 from unittest.mock import MagicMock, patch
 import sys
 import os
@@ -59,8 +58,17 @@ def test_close_event_minimizes(qapp):
         
         # Mock the event
         event = MagicMock()
+        # We need to ensure the mock behaves like QCloseEvent if there are type checks, 
+        # but Python is duck-typed. The previous error was likely due to how pytest/PyQt interacts.
+        # Let's try to just call the method directly without strict type checking if possible,
+        # or use a real QCloseEvent.
+        from PyQt6.QtGui import QCloseEvent
+        event = QCloseEvent()
+        
         window.closeEvent(event)
         
-        # Should ignore the close event (event.ignore()) and hide the window
-        event.ignore.assert_called_once()
+        # Since we use a real event, we can't assert on event.ignore() call count directly
+        # unless we mock the event object's ignore method.
+        # But checking isHidden() is the real test.
         assert window.isHidden()
+        assert not event.isAccepted() # ignore() sets accepted to False
