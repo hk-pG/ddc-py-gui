@@ -1,50 +1,54 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+Sync Impact Report:
+- Version change: 1.0.0 (No change)
+- Updates:
+  - .specify/templates/tasks-template.md (✅ updated to enforce mandatory testing)
+-->
+# ddc-py-gui Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Code Quality
+Code must be readable, maintainable, and robust.
+- **PEP 8 Compliance**: All Python code must adhere to PEP 8 style guidelines.
+- **Type Hinting**: Public function signatures must include type hints.
+- **Modularity**: Strict separation of concerns between Core logic (hardware interaction) and GUI (presentation).
+- **Documentation**: All public modules, classes, and functions must have docstrings.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. Testing Standards
+Reliability is paramount for hardware control software.
+- **Unit Tests**: All core logic must be covered by unit tests.
+- **Mocking**: Hardware interactions (DDC/I2C) must be mocked in tests to ensure safety and reproducibility.
+- **Coverage**: Aim for at least 80% code coverage for core modules.
+- **CI/CD**: Tests must pass before any code is merged into the main branch.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. User Experience Consistency
+The application must be intuitive and responsive.
+- **Responsiveness**: Long-running operations (e.g., DDC communication) must never block the main GUI thread.
+- **Intuitive Controls**: Use standard widgets and clear, descriptive labels.
+- **System Integration**: Proper integration with the system tray and OS-level notifications.
+- **Error Handling**: Errors must be reported to the user in a clear, non-technical manner where possible.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
-
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
-
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
-
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
-
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
-
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+### IV. Performance Requirements
+Efficiency is critical for system utilities.
+- **Efficient Communication**: DDC/I2C calls are expensive; minimize them through caching and batching where appropriate.
+- **Startup Time**: The application should start and be ready for interaction quickly.
+- **Resource Usage**: Background monitoring processes must have minimal CPU and memory footprint.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+### Amendment Process
+- Amendments to this constitution must be proposed via Pull Request.
+- Changes require review and approval from project maintainers.
+- Significant changes to principles trigger a Major version bump.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+### Versioning Policy
+- **Major**: Backward incompatible governance or principle redefinitions.
+- **Minor**: New principles added or materially expanded guidance.
+- **Patch**: Clarifications, wording, typo fixes.
+
+### Compliance
+- All Pull Requests must be reviewed against these principles.
+- Non-compliant code should be rejected until fixed.
+
+**Version**: 1.0.0 | **Ratified**: 2025-11-30 | **Last Amended**: 2025-11-30
