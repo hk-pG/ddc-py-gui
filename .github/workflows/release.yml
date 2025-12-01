@@ -14,36 +14,21 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
+      - name: Build Docker image
+        run: docker build -t ddc-builder .
 
-      - name: Install system dependencies
+      - name: Run Tests and Linters
         run: |
-          sudo apt-get update
-          sudo apt-get install -y libxcb-cursor0 libxcb-icccm4 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 libxcb-shape0 libxcb-sync1 libxcb-xfixes0 libxcb-xinerama0 libxcb-xkb1 libxkbcommon-x11-0 libegl1 libgl1-mesa-dev
+          docker run --rm -e QT_QPA_PLATFORM=offscreen ddc-builder sh -c "pytest && ruff check . && ruff format --check ."
 
-      - name: Install dependencies
+      - name: Build Artifact
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          # Run the build and rename the artifact inside the container
+          docker run --name builder ddc-builder sh -c "python3.11 -m PyInstaller ddc-control.spec && mv dist/ddc-control dist/ddc-control-linux && chmod 755 dist/ddc-control-linux"
 
-      - name: Run Tests
-        env:
-          QT_QPA_PLATFORM: offscreen
-        run: |
-          pytest
-
-      - name: Run Linters
-        run: |
-          ruff check .
-          ruff format --check .
-
-      - name: Build with PyInstaller
-        run: |
-          pyinstaller ddc-control.spec
-          mv dist/ddc-control dist/ddc-control-linux
+          # Copy the artifact from the container to the host
+          mkdir -p dist
+          docker cp builder:/app/dist/ddc-control-linux dist/ddc-control-linux
 
       - name: Create Release
         uses: softprops/action-gh-release@v1

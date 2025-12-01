@@ -1,0 +1,10 @@
+services:
+  builder:
+    build: .
+    volumes:
+      - ./dist:/app/dist
+    # Build the executable, rename it to match the release artifact name, and adjust permissions
+    command: >
+      sh -c "python3.11 -m PyInstaller ddc-control.spec &&
+             mv dist/ddc-control dist/ddc-control-linux &&
+             chmod 777 dist/ddc-control-linux"
