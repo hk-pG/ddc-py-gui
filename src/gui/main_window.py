@@ -26,6 +26,15 @@ class MainWindow(QMainWindow):
         self.init_ui()
         self.init_tray()
 
+    def activate_window(self):
+        """
+        Brings the window to the foreground and requests focus.
+        This handles cases where the window is minimized or obscured.
+        """
+        self.showNormal()
+        self.raise_()
+        self.activateWindow()
+
     def init_tray(self):
         self.tray_icon = QSystemTrayIcon(self)
         # Use a standard icon for now, or a placeholder
@@ -36,7 +45,7 @@ class MainWindow(QMainWindow):
         tray_menu = QMenu()
 
         show_action = QAction("Show", self)
-        show_action.triggered.connect(self.show)
+        show_action.triggered.connect(self.activate_window)
         tray_menu.addAction(show_action)
 
         quit_action = QAction("Quit", self)

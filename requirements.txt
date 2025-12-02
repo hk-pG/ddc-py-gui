@@ -1,6 +1,7 @@
 PyQt6
 monitorcontrol
 pytest
+pytest-qt
 ruff
 pyinstaller
 pre-commit

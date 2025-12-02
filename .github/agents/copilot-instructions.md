@@ -3,6 +3,7 @@
 Auto-generated from all feature plans. Last updated: 2025-11-30
 
 ## Active Technologies
+- Python 3.10+ (inferred from environment) + PyQt6, monitorcontrol (003-activate-window-on-show)
 
 - Python 3.x (Workflow will use `setup-python`) + PyInstaller, pytest, ruff (002-cicd-linux-release)
 
@@ -22,6 +23,7 @@ cd src [ONLY COMMANDS FOR ACTIVE TECHNOLOGIES][ONLY COMMANDS FOR ACTIVE TECHNOLO
 Python 3.x (Workflow will use `setup-python`): Follow standard conventions
 
 ## Recent Changes
+- 003-activate-window-on-show: Added Python 3.10+ (inferred from environment) + PyQt6, monitorcontrol
 
 - 002-cicd-linux-release: Added Python 3.x (Workflow will use `setup-python`) + PyInstaller, pytest, ruff
 
